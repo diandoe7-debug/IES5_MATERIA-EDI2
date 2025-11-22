@@ -1,0 +1,1764 @@
+ Los adelantos y
+retrasos permiten flexibilizar las dependencias para una mayor eficiencia en el cronograma.
+--------------------------------------------------------------------------------
+V. Refinamiento Adaptativo
+Esta sección es crucial para ajustar el modelo a las necesidades específicas del usuario una vez generado el
+HTML.
+Preguntas Personalizadas de Refinamiento
+1. Presupuesto Asumido:
+¿Es el presupuesto preliminar de ARS 5,000,000 asumido para el proyecto "Ajedrez Circular: Juegos 3D para
+el NOA" realista? ¿Desea especificar un presupuesto más preciso o detallar las categorías de gasto
+principales (ej., materiales, equipos, personal)?
+2. Hitos y Duración:
+Se han asumido hitos y duraciones específicas para cada fase (ej., 30 días para capacitación, 60 días para
+producción masiva). ¿Hay fechas límite o hitos específicos que deban considerarse? ¿Cuál sería la duración
+ideal del proyecto en semanas o meses?
+3. Roles y Recursos:
+Se han asumido roles genéricos (ej., Coordinador Técnico, Equipo de Impresión, Voluntarios). ¿Desea asignar
+nombres específicos o detallar las responsabilidades de cada rol? ¿Hay recursos específicos (impresoras 3D,
+máquinas extrusoras) que deban ser identificados por modelo o cantidad?
+4. Criterios de Calidad:
+Se han establecido criterios de calidad generales (ej., resistencia, seguridad, estética). ¿Desea añadir métricas
+más específicas, como porcentaje de piezas defectuosas tolerado, o certificaciones de seguridad para los
+materiales reciclados?
+5. Riesgos Específicos:
+Se han listado riesgos de alto nivel (ej., calidad del filamento, problemas técnicos, aceptación). ¿Existen
+riesgos adicionales que sean específicos de la operación en el NOA (ej., logística de distribución, financiación
+continua) o de la tecnología de reciclaje/impresión 3D?
+Este enfoque permite al usuario iterar sobre los resultados generados, proporcionando datos específicos
+para refinar el plan del proyecto en subsiguientes interacciones.
+ ```html
+ <!DOCTYPE html>
+ <html lang="es">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Planificación de Proyecto: Ajedrez Circular: Juegos 3D para el NOA</title>
+     <style>
+         body {
+             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+             margin: 20px;
+             line-height: 1.6;
+             color: #333;
+             background-color: #f4f4f4;
+         }
+         h1, h2, h3, h4, h5, h6 {
+             color: #2c3e50;
+             margin-top: 25px;
+             margin-bottom: 15px;
+             border-bottom: 2px solid #3498db;
+             padding-bottom: 5px;
+         }
+         h1 { font-size: 2.2em; border-bottom: 3px solid #3498db; padding-bottom: 10px; }
+         h2 { font-size: 1.8em; border-bottom: 2px solid #3498db; }
+         h3 { font-size: 1.5em; border-bottom: 1px solid #3498db; }
+         h4 { font-size: 1.2em; }
+         table {
+             width: 100%;
+             border-collapse: collapse;
+             margin: 20px 0;
+             background-color: #fff;
+             box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+         }
+         th, td {
+             border: 1px solid #ddd;
+             padding: 10px 15px;
+             text-align: left;
+             vertical-align: top;
+         }
+         th {
+             background-color: #3498db;
+             color: white;
+             font-weight: bold;
+         }
+         tr:nth-child(even) {
+             background-color: #f9f9f9;
+         }
+         tr:hover {
+             background-color: #f1f1f1;
+         }
+         .section {
+             margin-bottom: 40px;
+             padding: 20px;
+             background-color: #fff;
+             border-radius: 8px;
+             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+         }
+         .note {
+             background-color: #e7f3fe;
+             border-left: 6px solid #2196F3;
+             padding: 15px;
+             margin: 20px 0;
+             font-style: italic;
+             color: #333;
+         }
+         ul {
+             list-style-type: disc;
+             margin-left: 20px;
+         }
+         ol {
+             list-style-type: decimal;
+             margin-left: 20px;
+         }
+ 
+         /* WBS Specific Styles */
+         .wbs-table {
+             margin-top: 15px;
+             border: none;
+         }
+         .wbs-table th, .wbs-table td {
+             border: none;
+             padding: 8px 5px;
+         }
+         .wbs-table td {
+             vertical-align: middle;
+         }
+         .wbs-level-1 {
+             font-weight: bold;
+             color: #2c3e50;
+             background-color: #ecf0f1;
+             border-left: 4px solid #34495e;
+         }
+         .wbs-level-2 {
+             font-weight: bold;
+             color: #2980b9;
+             background-color: #f2f7fb;
+             border-left: 4px solid #3498db;
+             padding-left: 20px !important;
+         }
+         .wbs-level-3 {
+             font-weight: normal;
+             color: #1abc9c;
+             background-color: #fbfdfe;
+             border-left: 4px solid #1abc9c;
+             padding-left: 40px !important;
+         }
+         .wbs-level-4 {
+             font-weight: normal;
+             color: #e74c3c;
+             background-color: #fffafb;
+             border-left: 4px solid #e74c3c;
+             padding-left: 60px !important;
+             border-bottom: 1px dashed #e74c3c;
+         }
+ 
+         /* Dictionary Specific Styles */
+         .dictionary-entry {
+             border: 1px solid #c0d9e8;
+             margin-bottom: 30px;
+             background-color: #fdfefe;
+             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+             padding: 15px;
+             border-radius: 5px;
+         }
+         .dictionary-entry h4 {
+             color: #2c3e50;
+             margin-top: 0;
+             border-bottom: 1px solid #d0e8f8;
+             padding-bottom: 5px;
+         }
+         .dictionary-entry table {
+             margin: 10px 0;
+             width: 100%;
+         }
+         .dictionary-entry th, .dictionary-entry td {
+             padding: 8px;
+             border: 1px solid #ebf5fb;
+         }
+         .dictionary-entry th {
+             background-color: #eaf6fc;
+             color: #3498db;
+             width: 30%;
+         }
+ 
+         /* RTM Specific Styles */
+         .rtm-table th {
+             background-color: #2ecc71;
+         }
+         .rtm-table tr:nth-child(even) {
+             background-color: #f0fff4;
+         }
+         .rtm-table tr:hover {
+             background-color: #e6faed;
+         }
+ 
+         /* Gantt Specific Styles */
+         .gantt-container {
+             overflow-x: auto;
+             margin-top: 20px;
+             background-color: #fff;
+             padding: 15px;
+             border-radius: 8px;
+             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+         }
+         .gantt-table {
+             min-width: 1200px; /* Asegura un ancho mínimo para la tabla */
+             border: 1px solid #ccc;
+         }
+         .gantt-table th, .gantt-table td {
+             border: 1px solid #eee;
+             padding: 8px;
+             white-space: nowrap;
+         }
+         .gantt-table th {
+             background-color: #5d6d7e;
+             color: white;
+             text-align: center;
+         }
+         .gantt-table td.task-name {
+             text-align: left;
+             font-weight: bold;
+             width: 150px;
+         }
+         .gantt-grid {
+             position: relative;
+             height: 30px; /* Altura uniforme para todas las filas */
+             border-bottom: 1px dashed #eee;
+         }
+         .task-bar {
+             position: absolute;
+             height: 20px;
+             background-color: #3498db;
+             border-radius: 3px;
+             top: 5px; /* Centrar verticalmente en la celda */
+             color: white;
+             font-size: 0.8em;
+             line-height: 20px;
+             text-align: center;
+             overflow: hidden;
+             white-space: nowrap;
+             box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+         }
+         .critical-path {
+             background-color: #e74c3c !important;
+             border: 2px solid #c0392b;
+         }
+         .milestone {
+             position: absolute;
+             width: 15px;
+             height: 15px;
+             background-color: #f1c40f;
+             transform: rotate(45deg);
+             top: 7px; /* Ajuste para centrar el diamante */
+             box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+         }
+         .data-table-gantt th {
+             background-color: #2c3e50;
+             color: white;
+         }
+         .data-table-gantt tr:nth-child(even) {
+             background-color: #eef;
+         }
+         .data-table-gantt tr:hover {
+             background-color: #dde;
+         }
+     </style>
+ </head>
+ <body>
+ 
+     <header>
+         <h1>Plan de Proyecto: Ajedrez Circular: Juegos 3D para el NOA</h1>
+         <p>Documento de Planificación Integral del Proyecto basado en el estándar PMI-PMBOK 6ª Edición.</p>
+     </header>
+ 
+     <div class="section">
+         <h2>I. Acta de Constitución del Proyecto (ACP)</h2>
+         <p>El Acta de Constitución del Proyecto formaliza la existencia del proyecto y otorga al Director del Proyecto la autoridad para aplicar los recursos de la organización. Sirve como un documento de alto nivel que define la visión y los límites iniciales del proyecto.</p>
+ 
+         <h3>I.1. Información Administrativa General</h3>
+         <table>
+             <tr>
+                 <th>Campo Clave</th>
+                 <th>Especificación Detallada</th>
+             </tr>
+             <tr>
+                 <td>Título del Proyecto</td>
+                 <td>Ajedrez Circular: Juegos 3D para el NOA</td>
+             </tr>
+             <tr>
+                 <td>Organización Ejecutora</td>
+                 <td>Escuela Sarmiento - Departamento de Tecnología y Programación</td>
+             </tr>
+             <tr>
+                 <td>Fecha de Elaboración</td>
+                 <td>2024-05-15 (Asumido: Fecha actual de planificación del proyecto)</td>
+             </tr>
+             <tr>
+                 <td>Director del Proyecto Asignado</td>
+                 <td>Ing. Carlos Martínez (Asumido: El Coordinador Técnico es el Director del Proyecto)</td>
+             </tr>
+         </table>
+ 
+         <h3>I.2. Fundamentos y Objetivos del Proyecto</h3>
+         <table>
+             <tr>
+                 <th colspan="2">Campo Clave</th>
+                 <th>Especificación Detallada</th>
+             </tr>
+             <tr>
+                 <td rowspan="1">Propósito o Justificación (Necesidad de Negocio)</td>
+                 <td colspan="2">El proyecto nace de la necesidad de fomentar el acceso a herramientas educativas lúdicas y estratégicas, como el ajedrez, en comunidades desfavorecidas del Noroeste Argentino (NOA). Simultáneamente, aborda la creciente problemática de los residuos plásticos y la falta de conciencia ambiental, buscando transformar un problema en una solución sostenible y replicable. (Asumido: La justificación se deriva directamente de los objetivos generales proporcionados por el usuario, enfocándose en la dualidad social y ambiental).</td>
+             </tr>
+             <tr>
+                 <td rowspan="5">Objetivos Medibles del Proyecto (SMART)</td>
+                 <td><b>S (Específico):</b></td>
+                 <td>Producir un mínimo de <strong>200 sets completos de juegos de ajedrez</strong> (16 piezas blancas, 16 piezas negras y 1 tablero cada uno) mediante impresión 3D con filamentos reciclados, diseñados para ser didácticos y resistentes para su uso en instituciones educativas del NOA. (Asumido: Número de sets para establecer un objetivo cuantificable).</td>
+             </tr>
+             <tr>
+                 <td><b>M (Medible):</b></td>
+                 <td>Mantener el gasto total en filamentos por debajo de <strong>ARS 1,500,000</strong> y lograr una tasa de éxito de impresión del <strong>95%</strong> (piezas funcionales y estéticamente aceptables), utilizando al menos <strong>80% de plástico reciclado</strong> para la producción de filamentos. (Asumido: Presupuesto y porcentajes para métricas).</td>
+             </tr>
+             <tr>
+                 <td><b>A (Alcanzable) y R (Relevante):</b></td>
+                 <td>Se considera alcanzable al utilizar la infraestructura existente de la Escuela Sarmiento (impresoras 3D y espacio para máquinas extrusoras) y la participación activa de estudiantes y docentes capacitados. Es relevante porque contribuye directamente a la equidad educativa y la sostenibilidad ambiental en el NOA, alineándose con los valores de la institución y las necesidades de la comunidad. (Asumido: Recursos disponibles y alineación con la misión social).</td>
+             </tr>
+             <tr>
+                 <td><b>T (Temporal):</b></td>
+                 <td>Completar la totalidad del proceso de producción y distribución de los 200 juegos en un plazo máximo de <strong>5 meses</strong>, con la distribución final en las escuelas del NOA prevista para la última semana del quinto mes. (Asumido: Plazo total y fecha de finalización para el criterio temporal).</td>
+             </tr>
+             <tr>
+                 <td>Criterios de Éxito Asociados</td>
+                 <td colspan="2">
+                     <ul>
+                         <li>Entrega exitosa del 100% de los 200 sets de ajedrez a las instituciones educativas del NOA antes de la fecha límite.</li>
+                         <li>Cumplimiento del presupuesto asignado (variación máxima del 10%).</li>
+                         <li>Satisfacción de los usuarios (docentes y estudiantes) con la calidad y utilidad de los juegos (medible mediante encuestas post-distribución con un mínimo del 80% de satisfacción positiva).</li>
+                         <li>Generación de al menos un modelo replicable de economía circular documentado.</li>
+                         <li>Reducción verificable de residuos plásticos locales (ej., 500 kg de plástico reciclado). (Asumido: Métricas de satisfacción, documentación y reducción de residuos).</li>
+                     </ul>
+                 </td>
+             </tr>
+         </table>
+ 
+         <h3>I.3. Alcance y Elementos Clave</h3>
+         <table>
+             <tr>
+                 <th>Campo Clave</th>
+                 <th>Especificación Detallada</th>
+             </tr>
+             <tr>
+                 <td>Requisitos de Alto Nivel del Producto</td>
+                 <td>
+                     <ul>
+                         <li>Juegos de ajedrez completos (32 piezas + 1 tablero).</li>
+                         <li>Materiales de filamento 3D producidos a partir de plástico reciclado.</li>
+                         <li>Piezas resistentes, seguras (no tóxicas, sin bordes afilados) y estéticamente atractivas.</li>
+                         <li>Diseño de piezas y tablero adaptado para impresión 3D, optimizado para durabilidad y facilidad de uso.</li>
+                         <li>Empaquetado adecuado para distribución y durabilidad.</li>
+                     </ul>
+                 </td>
+             </tr>
+             <tr>
+                 <td>Descripción de Alto Nivel y Límites del Proyecto (Inclusiones Clave)</td>
+                 <td>El proyecto incluye la implementación de un sistema de reciclaje de plásticos, la capacitación de estudiantes y docentes en tecnologías 3D y economía circular, el diseño y prototipado de piezas de ajedrez, la producción masiva de al menos 200 sets, y la distribución gratuita de estos sets en escuelas primarias y secundarias del Noroeste Argentino. Se enfoca en el uso de plásticos PET, ABS y PLA reciclados y el fomento de la conciencia ambiental.</td>
+             </tr>
+             <tr>
+                 <td>Exclusiones Clave (Fuera del Alcance)</td>
+                 <td>
+                     <ul>
+                         <li>Producción de otros juegos o materiales didácticos que no sean ajedrez.</li>
+                         <li>Comercialización de los juegos de ajedrez o filamentos.</li>
+                         <li>Creación de una nueva infraestructura permanente para reciclaje a gran escala fuera de la escuela.</li>
+                         <li>Mantenimiento a largo plazo o reparación de los juegos una vez distribuidos.</li>
+                         <li>Distribución fuera del territorio del NOA.</li>
+                         <li>Investigación fundamental sobre nuevos tipos de plásticos reciclables o procesos de impresión 3D avanzados.</li>
+                     </ul>
+                 </td>
+             </tr>
+             <tr>
+                 <td>Entregables Principales (Clave)</td>
+                 <td>
+                     <ul>
+                         <li>1.0 Sistema de Reciclaje y Producción de Filamentos Operativo</li>
+                         <li>2.0 Programa de Capacitación Implementado</li>
+                         <li>3.0 Diseños de Ajedrez Validados (STL)</li>
+                         <li>4.0 Juegos de Ajedrez Impresos y Verificados (200 Sets)</li>
+                         <li>5.0 Logística de Distribución Establecida y Ejecutada</li>
+                         <li>6.0 Informe Final del Proyecto y Modelo Replicable</li>
+                     </ul>
+                 </td>
+             </tr>
+         </table>
+ 
+         <h3>I.4. Gestión, Recursos y Riesgos</h3>
+         <table>
+             <tr>
+                 <th>Campo Clave</th>
+                 <th>Especificación Detallada</th>
+             </tr>
+             <tr>
+                 <td>Resumen del Cronograma de Hitos</td>
+                 <td>
+                     <ul>
+                         <li><b>Hito 1:</b> Sistema de Reciclaje y Producción de Filamentos Listo (Mes 1, Semana 4)</li>
+                         <li><b>Hito 2:</b> Diseño de Piezas de Ajedrez Validado y Aprobado (Mes 2, Semana 4)</li>
+                         <li><b>Hito 3:</b> Inicio de Producción Masiva (Mes 3, Semana 1)</li>
+                         <li><b>Hito 4:</b> Finalización de Producción de 200 Sets (Mes 4, Semana 4)</li>
+                         <li><b>Hito 5:</b> Distribución Completa en Escuelas del NOA (Mes 5, Semana 4)</li>
+                     </ul>
+                 </td>
+             </tr>
+             <tr>
+                 <td>Recursos Financieros Preaprobados</td>
+                 <td>ARS 5,000,000 (Asumido: Presupuesto preliminar para cubrir equipos, materiales, logística y personal. Justificación técnica PMBOK/GEMS: Un presupuesto inicial permite iniciar la planificación detallada y la adquisición de recursos críticos.)</td>
+             </tr>
+             <tr>
+                 <td>Riesgo General del Proyecto (Alto Nivel)</td>
+                 <td>
+                     <ul>
+                         <li><b>Calidad del filamento reciclado:</b> Puede no cumplir con los estándares para impresión 3D, afectando la durabilidad de las piezas.</li>
+                         <li><b>Problemas técnicos:</b> Fallas en impresoras 3D o máquinas extrusoras que retrasen la producción.</li>
+                         <li><b>Aceptación en escuelas:</b> Resistencia o baja adopción de los juegos por parte de las instituciones o estudiantes.</li>
+                         <li><b>Logística de distribución:</b> Retrasos o dificultades para llegar a todas las escuelas del NOA.</li>
+                         <li><b>Financiación:</b> Insuficiencia de fondos para completar todas las fases del proyecto.</li>
+                     </ul>
+                 </td>
+             </tr>
+             <tr>
+                 <td>Registro de Supuestos y Restricciones (Alto Nivel)</td>
+                 <td>
+                     <ul>
+                         <li><b>Supuestos:</b>
+                             <ul>
+                                 <li>Se obtendrá suficiente material plástico reciclado de calidad adecuada.</li>
+                                 <li>El personal y estudiantes dedicados al proyecto mantendrán el compromiso.</li>
+                                 <li>Las instituciones educativas del NOA mostrarán interés y colaborarán en la distribución.</li>
+                                 <li>Se cuenta con la autorización y apoyo de las autoridades escolares y gubernamentales.</li>
+                             </ul>
+                         </li>
+                         <li><b>Restricciones:</b>
+                             <ul>
+                                 <li>Presupuesto fijo de ARS 5,000,000.</li>
+                                 <li>Plazo máximo de 5 meses para la ejecución completa.</li>
+                                 <li>Disponibilidad limitada de impresoras 3D (4 unidades) y una máquina extrusora.</li>
+                                 <li>El alcance geográfico se limita exclusivamente al Noroeste Argentino (NOA).</li>
+                             </ul>
+                         </td>
+                     </ul>
+                 </td>
+             </tr>
+         </table>
+ 
+         <h3>I.5. Autoridad, Roles y Cierre</h3>
+         <table>
+             <tr>
+                 <th>Campo Clave</th>
+                 <th>Especificación Detallada</th>
+             </tr>
+             <tr>
+                 <td>Nivel de Autoridad del Director del Proyecto</td>
+                 <td>El Ing. Carlos Martínez tiene autoridad para asignar tareas, gestionar el presupuesto preaprobado, adquirir los recursos necesarios (dentro de los límites del presupuesto y las restricciones), aprobar cambios menores que no afecten el alcance, el tiempo o el costo principal del proyecto, y tomar decisiones operativas para asegurar el cumplimiento de los objetivos. (Asumido: Nivel de autoridad basado en el rol de "Coordinador Técnico" para un proyecto educativo).</td>
+             </tr>
+             <tr>
+                 <td>Lista de Interesados Clave Principales</td>
+                 <td>
+                     <ul>
+                         <li><b>Patrocinador del Proyecto:</b> Rectoría de la Escuela Sarmiento (o Dirección del Departamento de Tecnología).</li>
+                         <li><b>Director del Proyecto:</b> Ing. Carlos Martínez (Coordinador Técnico).</li>
+                         <li><b>Equipo del Proyecto:</b> Estudiantes de Programación y Tecnología.</li>
+                         <li><b>Colaboradores:</b> Docentes de Ciencias, Voluntarios Ambientales.</li>
+                         <li><b>Proveedores:</b> Organizaciones locales de reciclaje.</li>
+                         <li><b>Beneficiarios:</b> Escuelas primarias y secundarias del NOA, estudiantes del NOA.</li>
+                         <li><b>Otros Interesados:</b> Padres de familia, comunidad local, autoridades educativas.</li>
+                     </ul>
+                 </td>
+             </tr>
+             <tr>
+                 <td>Designación del Patrocinador y Aprobación</td>
+                 <td><b>Nombre:</b> [Nombre del Rector/Director del Departamento] <br> <b>Cargo:</b> Rector de la Escuela Sarmiento / Director del Departamento de Tecnología<br> (Firma de Aprobación)<br> (Asumido: La autoridad recae en la máxima figura de la institución o departamento principal).</td>
+             </tr>
+             <tr>
+                 <td>Criterios de Salida/Cierre del Proyecto</td>
+                 <td>
+                     <ul>
+                         <li>Entrega formal de los 200 sets de ajedrez a las escuelas del NOA con actas de recepción firmadas.</li>
+                         <li>Documentación completa del proceso de reciclaje, producción de filamentos e impresión 3D, incluyendo el "Modelo Replicable".</li>
+                         <li>Informe final del proyecto que compare los resultados reales con los objetivos SMART y los criterios de éxito establecidos.</li>
+                         <li>Cierre de todos los contratos y acuerdos con proveedores y colaboradores.</li>
+                         <li>Libre de deudas y con cierre administrativo y financiero.</li>
+                         <li>Lecciones aprendidas documentadas y archivadas.</li>
+                     </ul>
+                 </td>
+             </tr>
+         </table>
+     </div>
+ 
+     <div class="section">
+         <h2>II. Estructura de Desglose de Trabajo (EDT/WBS)</h2>
+         <p>La EDT es una descomposición jerárquica orientada a los entregables del trabajo total a ser realizado por el equipo del proyecto. Representa el 100% del alcance del proyecto, desglosado hasta el nivel de Paquetes de Trabajo (PT).</p>
+         <div class="note">
+             <strong>Asumido:</strong> La EDT ha sido diseñada hasta el Nivel 4 (Paquete de Trabajo) para permitir una estimación y gestión detallada del alcance, tiempo y costo. Se ha utilizado la regla del 100% para asegurar que todo el trabajo necesario está incluido y que no hay trabajo extra. Los colores y sangrías simulan la jerarquía para una mejor comprensión visual.
+         </div>
+         <table class="wbs-table">
+             <thead>
+                 <tr>
+                     <th>Código</th>
+                     <th style="width: 25%;">Nivel 1: Proyecto</th>
+                     <th style="width: 25%;">Nivel 2: Entregables Principales</th>
+                     <th style="width: 25%;">Nivel 3: Subcomponentes o Actividades</th>
+                     <th style="width: 25%;">Nivel 4: Paquetes de Trabajo (PT)</th>
+                 </tr>
+             </thead>
+             <tbody>
+                 <tr class="wbs-level-1">
+                     <td>1.0</td>
+                     <td>Ajedrez Circular: Juegos 3D para el NOA</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                 </tr>
+                 <tr>
+                     <td>1.1</td>
+                     <td class="wbs-level-2"></td>
+                     <td class="wbs-level-2">1. Sistema de Reciclaje y Producción de Filamentos Operativo</td>
+                     <td></td>
+                     <td></td>
+                 </tr>
+                 <tr>
+                     <td>1.1.1</td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-3">1.1. Recolección y Clasificación de Plásticos</td>
+                     <td></td>
+                 </tr>
+                 <tr>
+                     <td>1.1.1.1</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Campañas de Recolección (Plástico)</td>
+                 </tr>
+                 <tr>
+                     <td>1.1.1.2</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Clasificación y Limpieza de Materiales</td>
+                 </tr>
+                 <tr>
+                     <td>1.1.2</td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-3">1.2. Procesamiento de Filamentos</td>
+                     <td></td>
+                 </tr>
+                 <tr>
+                     <td>1.1.2.1</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Triturado de Plástico</td>
+                 </tr>
+                 <tr>
+                     <td>1.1.2.2</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Extrusión de Filamento 3D</td>
+                 </tr>
+                 <tr>
+                     <td>1.1.2.3</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Control de Calidad del Filamento</td>
+                 </tr>
+                 <tr>
+                     <td>1.2</td>
+                     <td class="wbs-level-2"></td>
+                     <td class="wbs-level-2">2. Programa de Capacitación Implementado</td>
+                     <td></td>
+                     <td></td>
+                 </tr>
+                 <tr>
+                     <td>1.2.1</td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-3">2.1. Diseño y Materiales Didácticos</td>
+                     <td></td>
+                 </tr>
+                 <tr>
+                     <td>1.2.1.1</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Elaboración de Contenidos Didácticos</td>
+                 </tr>
+                 <tr>
+                     <td>1.2.2</td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-3">2.2. Ejecución de la Capacitación</td>
+                     <td></td>
+                 </tr>
+                 <tr>
+                     <td>1.2.2.1</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Taller de Impresión 3D y Reciclaje (Estudiantes)</td>
+                 </tr>
+                 <tr>
+                     <td>1.2.2.2</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Taller de Impresión 3D y Reciclaje (Docentes)</td>
+                 </tr>
+                 <tr>
+                     <td>1.3</td>
+                     <td class="wbs-level-2"></td>
+                     <td class="wbs-level-2">3. Diseños de Ajedrez Validados (STL)</td>
+                     <td></td>
+                     <td></td>
+                 </tr>
+                 <tr>
+                     <td>1.3.1</td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-3">3.1. Modelado 3D de Piezas y Tablero</td>
+                     <td></td>
+                 </tr>
+                 <tr>
+                     <td>1.3.1.1</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Diseño Inicial de Piezas (CAD)</td>
+                 </tr>
+                 <tr>
+                     <td>1.3.1.2</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Diseño de Tablero Modular (CAD)</td>
+                 </tr>
+                 <tr>
+                     <td>1.3.2</td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-3">3.2. Prototipado y Validación</td>
+                     <td></td>
+                 </tr>
+                 <tr>
+                     <td>1.3.2.1</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Impresión de Prototipos</td>
+                 </tr>
+                 <tr>
+                     <td>1.3.2.2</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Pruebas de Resistencia y Estética</td>
+                 </tr>
+                 <tr>
+                     <td>1.3.2.3</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Ajustes Finales y Aprobación del Diseño</td>
+                 </tr>
+                 <tr>
+                     <td>1.4</td>
+                     <td class="wbs-level-2"></td>
+                     <td class="wbs-level-2">4. Juegos de Ajedrez Impresos y Verificados (200 Sets)</td>
+                     <td></td>
+                     <td></td>
+                 </tr>
+                 <tr>
+                     <td>1.4.1</td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-3">4.1. Preparación de Impresoras</td>
+                     <td></td>
+                 </tr>
+                 <tr>
+                     <td>1.4.1.1</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Calibración y Mantenimiento de Impresoras 3D</td>
+                 </tr>
+                 <tr>
+                     <td>1.4.2</td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-3">4.2. Producción Masiva</td>
+                     <td></td>
+                 </tr>
+                 <tr>
+                     <td>1.4.2.1</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Impresión de Piezas de Ajedrez</td>
+                 </tr>
+                 <tr>
+                     <td>1.4.2.2</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Impresión de Tableros Modulares</td>
+                 </tr>
+                 <tr>
+                     <td>1.4.3</td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-3">4.3. Post-producción y Embalaje</td>
+                     <td></td>
+                 </tr>
+                 <tr>
+                     <td>1.4.3.1</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Limpieza y Acabado de Piezas</td>
+                 </tr>
+                 <tr>
+                     <td>1.4.3.2</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Ensamblaje y Empaquetado de Sets</td>
+                 </tr>
+                 <tr>
+                     <td>1.4.3.3</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Control de Calidad Final de Sets</td>
+                 </tr>
+                 <tr>
+                     <td>1.5</td>
+                     <td class="wbs-level-2"></td>
+                     <td class="wbs-level-2">5. Logística de Distribución Establecida y Ejecutada</td>
+                     <td></td>
+                     <td></td>
+                 </tr>
+                 <tr>
+                     <td>1.5.1</td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-3">5.1. Planificación de la Distribución</td>
+                     <td></td>
+                 </tr>
+                 <tr>
+                     <td>1.5.1.1</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Identificación y Contacto con Escuelas del NOA</td>
+                 </tr>
+                 <tr>
+                     <td>1.5.1.2</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Coordinación de Rutas y Entregas</td>
+                 </tr>
+                 <tr>
+                     <td>1.5.2</td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-3">5.2. Ejecución de la Distribución</td>
+                     <td></td>
+                 </tr>
+                 <tr>
+                     <td>1.5.2.1</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Transporte de Juegos a Escuelas</td>
+                 </tr>
+                 <tr>
+                     <td>1.5.2.2</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Entrega y Documentación de Recepción</td>
+                 </tr>
+                 <tr>
+                     <td>1.6</td>
+                     <td class="wbs-level-2"></td>
+                     <td class="wbs-level-2">6. Informe Final del Proyecto y Modelo Replicable</td>
+                     <td></td>
+                     <td></td>
+                 </tr>
+                 <tr>
+                     <td>1.6.1</td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-3">6.1. Evaluación y Cierre</td>
+                     <td></td>
+                 </tr>
+                 <tr>
+                     <td>1.6.1.1</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Recopilación de Feedback de Escuelas</td>
+                 </tr>
+                 <tr>
+                     <td>1.6.1.2</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Análisis de Resultados y Lecciones Aprendidas</td>
+                 </tr>
+                 <tr>
+                     <td>1.6.2</td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-3">6.2. Documentación Final</td>
+                     <td></td>
+                 </tr>
+                 <tr>
+                     <td>1.6.2.1</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Elaboración de Informe Final</td>
+                 </tr>
+                 <tr>
+                     <td>1.6.2.2</td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td class="wbs-level-4">PT: Publicación del Modelo Replicable</td>
+                 </tr>
+             </tbody>
+         </table>
+     </div>
+ 
+     <div class="section">
+         <h2>III. Diccionario de la EDT</h2>
+         <p>El Diccionario de la EDT proporciona información detallada para cada Paquete de Trabajo (PT) definido en la Estructura de Desglose de Trabajo. Es fundamental para la gestión precisa del alcance, tiempo y costos.</p>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Campañas de Recolección (Plástico)</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>1.0 Sistema de Reciclaje y Producción de Filamentos Operativo</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.1.1.1</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Planificar y ejecutar campañas de concientización y recolección de residuos plásticos (PET, ABS, PLA) en la escuela y comunidades aledañas, estableciendo puntos de acopio y horarios de recolección. El objetivo es obtener la materia prima suficiente para producir filamentos para 200 juegos. (Asumido: Detalle del tipo de plástico y volumen meta para la justificación).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> La comunidad responderá positivamente a las campañas de recolección y aportará suficiente material. <b>Restricción:</b> La disponibilidad de transporte para el acopio puede ser limitada a vehículos escolares y voluntarios.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Voluntarios Ambientales y Estudiantes</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>Inicio de campañas: Día 1 del Mes 1. Finalización de campañas: Día 20 del Mes 1.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Diseño de material publicitario, difusión en redes sociales y medios escolares, organización de puntos de recolección, supervisión durante las jornadas.</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Materiales publicitarios (afiches, folletos), contenedores de reciclaje, voluntarios, vehículos para transporte.</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 50,000 (publicidad y logística básica). (Asumido: Costo para materiales publicitarios y logística inicial, Justificación técnica PMBOK/GEMS: Estimación basada en costos promedio para campañas de concientización locales).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>20 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>Recolección de al menos 100 kg de plástico clasificado. Mínimo 80% de plástico útil tras una inspección inicial. (Asumido: Peso y porcentaje para métrica de calidad).</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>Informe de recolección documentando volumen y tipo de plásticos. Evidencia fotográfica de las campañas. Plástico acopiado, limpio y pre-clasificado.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td>Guías de clasificación de plásticos (PET, ABS, PLA).</td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td>Acuerdos de colaboración con organizaciones de reciclaje local.</td></tr>
+             </table>
+         </div>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Clasificación y Limpieza de Materiales</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>1.0 Sistema de Reciclaje y Producción de Filamentos Operativo</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.1.1.2</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Clasificar el plástico recolectado por tipo (PET, ABS, PLA), color, y realizar una limpieza exhaustiva para eliminar etiquetas, residuos orgánicos y otros contaminantes. Esto es crucial para la calidad del filamento final. (Asumido: Detalle de la importancia de la limpieza para la calidad del producto).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> El equipo contará con el espacio adecuado y los materiales de limpieza necesarios. <b>Restricción:</b> La mano de obra para la clasificación y limpieza dependerá de la disponibilidad de voluntarios y estudiantes.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Voluntarios Ambientales y Estudiantes</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>Finalización de limpieza de lote 1: Día 25 del Mes 1.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Instalación de estaciones de clasificación, provisión de equipos de protección personal (EPP), supervisión de limpieza.</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Estaciones de clasificación, guantes, gafas de seguridad, productos de limpieza biodegradables, agua.</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 30,000 (materiales de limpieza y EPP). (Asumido: Costo para asegurar la seguridad y eficacia del proceso, Justificación técnica PMBOK/GEMS: Prioridad en la seguridad del equipo y la calidad del material).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>10 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>Plástico clasificado con 98% de pureza por tipo. Material libre de contaminantes visibles y etiquetas.</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>Lotes de plástico clasificados y limpios, listos para triturado. Informe de control de pureza del material.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td>Estándares de clasificación de polímeros (ISO 1043).</td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td></td></tr>
+             </table>
+         </div>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Triturado de Plástico</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>1.0 Sistema de Reciclaje y Producción de Filamentos Operativo</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.1.2.1</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Procesar el plástico limpio y clasificado utilizando una máquina trituradora para convertirlo en gránulos uniformes. Este paso es fundamental para la extrusión, ya que asegura una alimentación constante y una fusión homogénea. (Asumido: Detalle de la importancia de la uniformidad para el proceso siguiente).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> La máquina trituradora funciona correctamente y sin averías mayores. <b>Restricción:</b> Capacidad de la trituradora limita el volumen de procesamiento diario.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Estudiantes de Tecnología (supervisados por Ing. Carlos Martínez)</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>Finalización de triturado de lote inicial: Día 30 del Mes 1.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Mantenimiento preventivo de la trituradora, operación del equipo, supervisión de la granulometría.</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Máquina trituradora de plástico, EPP, recipientes para gránulos.</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 20,000 (energía eléctrica y repuestos menores). (Asumido: Costo operativo básico de la máquina, Justificación técnica PMBOK/GEMS: Consideración de los costos de operación y mantenimiento de equipos).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>5 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>Gránulos de plástico con tamaño uniforme (±0.5mm). Mínimo 99% de material triturado sin impurezas.</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>Gránulos de plástico listos para la extrusión, informe de granulometría y pureza.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td>Manual de operación de la máquina trituradora.</td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td></td></tr>
+             </table>
+         </div>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Extrusión de Filamento 3D</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>1.0 Sistema de Reciclaje y Producción de Filamentos Operativo</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.1.2.2</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Alimentar los gránulos de plástico triturado a la máquina extrusora para producir filamento 3D con un diámetro constante y propiedades adecuadas para la impresión. Este es el corazón del proceso de reciclaje. (Asumido: Énfasis en la constancia del diámetro como factor crítico de calidad).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> La máquina extrusora está correctamente calibrada para los tipos de plástico a procesar. <b>Restricción:</b> La velocidad de extrusión y la capacidad de enfriamiento limitan la producción diaria de filamento.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Ing. Carlos Martínez y Estudiantes de Tecnología</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>Producción de 1er carrete de filamento: Día 35 del Mes 1.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Calibración de la extrusora (temperatura, velocidad), operación continua, monitoreo de diámetro.</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Máquina extrusora de filamento 3D, sensor de diámetro, carretes vacíos, EPP.</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 70,000 (energía, consumibles para extrusora, posibles reparaciones). (Asumido: Costo más elevado debido a la complejidad del equipo, Justificación técnica PMBOK/GEMS: Prioridad en la operatividad de un equipo clave).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>10 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>Diámetro del filamento de 1.75 mm ± 0.05 mm. Bobinas de filamento libres de burbujas o impurezas visibles.</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>Carretes de filamento 3D producidos, con certificados de diámetro y homogeneidad.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td>Manual de operación de la máquina extrusora. Normas ASTM D256 para pruebas de impacto.</td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td></td></tr>
+             </table>
+         </div>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Control de Calidad del Filamento</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>1.0 Sistema de Reciclaje y Producción de Filamentos Operativo</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.1.2.3</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Realizar pruebas de calidad al filamento extruido, incluyendo la verificación del diámetro, la homogeneidad, la resistencia a la tracción y la adhesión de capas. Esto asegura que el filamento sea apto para la impresión 3D y que las piezas finales sean duraderas. (Asumido: Detalle de las pruebas para garantizar la funcionalidad del filamento).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> Se cuenta con los equipos de laboratorio necesarios para las pruebas. <b>Restricción:</b> El tiempo para pruebas destructivas puede ralentizar el flujo de producción.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Ing. Carlos Martínez y Estudiantes de Tecnología</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>Aprobación del 1er lote de filamento: Día 40 del Mes 1.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Muestreo de filamento, uso de micrómetro, pruebas de impresión de muestra, registro de resultados.</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Micrómetro, impresora 3D para pruebas, equipo de pruebas de tracción (si disponible), software de registro de datos.</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 15,000 (consumibles para pruebas, energía). (Asumido: Costo para la rigurosidad de las pruebas, Justificación técnica PMBOK/GEMS: Inversión necesaria para asegurar la calidad del insumo principal).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>5 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>Diámetro constante (±0.05mm). Resistencia a la tracción dentro del 90% del filamento virgen. Ausencia de warping o stringing en impresiones de prueba.</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>Filamento aprobado para producción masiva, con informe de calidad documentado.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td>Estándares de calidad para filamentos 3D (ej., ASTM D638 para resistencia a la tracción).</td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td></td></tr>
+             </table>
+         </div>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Elaboración de Contenidos Didácticos</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>2.0 Programa de Capacitación Implementado</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.2.1.1</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Desarrollar manuales, presentaciones y recursos audiovisuales para los talleres de capacitación dirigidos a estudiantes y docentes. El contenido debe abarcar principios de impresión 3D, reciclaje de plásticos y economía circular. (Asumido: Detalle de los temas a cubrir en la capacitación).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> Los docentes de ciencias y tecnología colaborarán activamente en la creación del material. <b>Restricción:</b> El tiempo de los docentes para desarrollar material didáctico es limitado.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Docentes de Ciencias y Tecnología</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>Contenidos didácticos aprobados: Día 10 del Mes 1.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Investigación de contenido, diseño gráfico, revisión por pares, impresión de materiales.</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Software de diseño (PowerPoint, Canva), recursos bibliográficos, impresoras de papel, proyectores.</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 25,000 (impresión de materiales, licencias de software). (Asumido: Costo para asegurar la calidad y disponibilidad del material didáctico, Justificación técnica PMBOK/GEMS: Inversión en recursos de apoyo educativo).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>10 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>Contenidos claros, concisos, visualmente atractivos, adecuados para el público objetivo (estudiantes y docentes).</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>Materiales didácticos aprobados por el Ing. Carlos Martínez y al menos dos docentes.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td>Currículum escolar de tecnología y medio ambiente.</td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td>Acuerdos internos con los departamentos académicos.</td></tr>
+             </table>
+         </div>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Taller de Impresión 3D y Reciclaje (Estudiantes)</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>2.0 Programa de Capacitación Implementado</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.2.2.1</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Impartir talleres prácticos a los estudiantes participantes sobre el funcionamiento de las impresoras 3D, el proceso de reciclaje de plástico en filamento y los principios de la economía circular. Incluye práctica supervisada en la operación de equipos. (Asumido: Detalle del enfoque práctico de la capacitación).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> Los estudiantes tienen un interés previo en tecnología y medio ambiente. <b>Restricción:</b> La cantidad de impresoras limita el número de estudiantes por sesión.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Ing. Carlos Martínez y Docentes de Tecnología</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>Finalización de capacitación a estudiantes: Día 20 del Mes 1.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Sesiones teóricas, demostraciones prácticas, ejercicios con impresoras 3D, evaluación de aprendizaje.</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Aulas equipadas, impresoras 3D, filamento, computadoras con software CAD básico, materiales didácticos.</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 40,000 (materiales consumibles para prácticas, energía). (Asumido: Costo para la práctica intensiva y uso de equipos, Justificación técnica PMBOK/GEMS: Inversión en formación práctica que es vital para la ejecución del proyecto).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>10 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>Mínimo 80% de los estudiantes demuestran comprensión y habilidades básicas en operación de impresoras 3D y conceptos de reciclaje.</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>Lista de asistencia, evaluaciones de conocimiento, resultados de práctica supervisada.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td></td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td></td></tr>
+             </table>
+         </div>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Taller de Impresión 3D y Reciclaje (Docentes)</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>2.0 Programa de Capacitación Implementado</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.2.2.2</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Capacitar a los docentes de la Escuela Sarmiento en el uso avanzado de impresoras 3D, mantenimiento básico, optimización de impresiones y el modelo de economía circular, con el objetivo de que puedan replicar los conocimientos y apoyar el proyecto a largo plazo. (Asumido: Detalle de la capacitación avanzada para docentes como replicadores).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> Los docentes están motivados para integrar estas tecnologías en sus currículos. <b>Restricción:</b> La disponibilidad de tiempo de los docentes fuera de su horario lectivo es limitada.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Ing. Carlos Martínez</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>Finalización de capacitación a docentes: Día 25 del Mes 1.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Sesiones teóricas avanzadas, práctica en resolución de problemas de impresión, debates sobre integración curricular.</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Aulas equipadas, impresoras 3D, filamento, material didáctico específico para docentes.</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 15,000 (refrigerios, materiales extra). (Asumido: Costo para un ambiente de capacitación propicio, Justificación técnica PMBOK/GEMS: Inversión en el desarrollo profesional de los formadores).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>5 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>Mínimo 90% de los docentes demuestran competencia en la operación y resolución de problemas comunes de impresoras 3D.</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>Lista de asistencia, evaluaciones de competencia, feedback positivo de los participantes.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td></td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td></td></tr>
+             </table>
+         </div>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Diseño Inicial de Piezas (CAD)</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>3.0 Diseños de Ajedrez Validados (STL)</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.3.1.1</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Modelar en software CAD (Computer-Aided Design) las 32 piezas estándar de ajedrez, optimizando su diseño para la impresión 3D (reducción de soportes, resistencia estructural) y buscando una estética atractiva y didáctica. (Asumido: Detalle de la optimización para la impresión 3D como clave del diseño).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> Los estudiantes de programación y tecnología poseen habilidades básicas en software CAD. <b>Restricción:</b> La complejidad de las piezas puede requerir iteraciones de diseño, aumentando el tiempo.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Estudiantes de Programación y Tecnología</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>Diseños iniciales de piezas completados: Día 10 del Mes 2.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Búsqueda de referencias de diseño, modelado en software (ej. Fusion 360, Tinkercad), revisión interna de diseños.</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Computadoras con software CAD, monitores, mouse 3D (opcional).</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 10,000 (licencias de software, si aplica, y energía). (Asumido: Costo mínimo para software y operación, Justificación técnica PMBOK/GEMS: Recurso indispensable para la fase de diseño).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>10 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>Diseños en formato STL sin errores de geometría (manifold). Piezas con proporciones adecuadas y detalles claros.</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>Archivos STL de las 32 piezas de ajedrez aprobados para prototipado.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td>Principios de diseño para impresión 3D, estándares de formato STL.</td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td></td></tr>
+             </table>
+         </div>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Diseño de Tablero Modular (CAD)</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>3.0 Diseños de Ajedrez Validados (STL)</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.3.1.2</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Diseñar en software CAD un tablero de ajedrez que sea modular (ej., en 4 o 6 partes que encajen), optimizado para impresión 3D y fácil ensamblaje, priorizando la resistencia y portabilidad para el uso escolar. (Asumido: Detalle del diseño modular para facilitar la impresión y transporte).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> El diseño modular no presentará problemas de alineación o estabilidad. <b>Restricción:</b> El tamaño de la base de impresión de las impresoras limita el tamaño máximo de cada módulo.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Estudiantes de Programación y Tecnología</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>Diseño inicial de tablero completado: Día 15 del Mes 2.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Diseño de módulos con sistema de encaje, cálculo de dimensiones, revisión de diseño.</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Computadoras con software CAD.</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 5,000 (energía). (Asumido: Costo mínimo para operación, Justificación técnica PMBOK/GEMS: Se asume que no hay costos adicionales significativos de software).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>5 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>Diseño modular en formato STL, con encajes precisos y una superficie de juego plana. Dimensiones del tablero estándar (ej., 30x30 cm una vez ensamblado).</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>Archivos STL de los módulos del tablero aprobados para prototipado.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td>Estándares FIDE para tableros de ajedrez.</td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td></td></tr>
+             </table>
+         </div>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Impresión de Prototipos</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>3.0 Diseños de Ajedrez Validados (STL)</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.3.2.1</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Imprimir un conjunto completo de piezas de ajedrez y un tablero modular utilizando los diseños CAD finales y el filamento reciclado producido. El objetivo es evaluar la viabilidad de impresión y las propiedades físicas. (Asumido: Detalle de la producción de una primera versión física para validación).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> Las impresoras 3D están operativas y el filamento es de calidad adecuada. <b>Restricción:</b> La disponibilidad de las impresoras puede ser un cuello de botella si se utilizan para otros fines simultáneamente.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Equipo de Impresión (Estudiantes)</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>Prototipos de piezas y tablero impresos: Día 20 del Mes 2.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Preparación de archivos STL para impresión (slicing), configuración de impresoras, monitoreo de impresión.</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Impresoras 3D, filamento reciclado, computadoras con software de laminado (slicer).</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 20,000 (filamento y energía). (Asumido: Costo de material y energía para las pruebas, Justificación técnica PMBOK/GEMS: Esencial para la validación física de los diseños).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>5 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>Impresiones completas, sin fallos mayores, que representen fielmente los diseños CAD.</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>Un set completo de ajedrez (piezas y tablero) impreso satisfactoriamente.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td>Manuales de uso de impresoras 3D, software de laminado (ej., Cura, PrusaSlicer).</td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td></td></tr>
+             </table>
+         </div>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Pruebas de Resistencia y Estética</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>3.0 Diseños de Ajedrez Validados (STL)</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.3.2.2</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Realizar pruebas físicas a los prototipos impresos para evaluar su resistencia al impacto, durabilidad ante el uso repetido y su atractivo estético. Se recogerá feedback de estudiantes y docentes sobre la funcionalidad y el diseño. (Asumido: Detalle de las pruebas y el feedback como parte de la validación).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> Las pruebas revelarán áreas claras de mejora en el diseño o el material. <b>Restricción:</b> El proceso de prueba puede dañar prototipos, requiriendo reimpresiones.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Ing. Carlos Martínez, Estudiantes y Docentes</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>Informe de pruebas de prototipos: Día 25 del Mes 2.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Pruebas de caída, pruebas de presión, encuestas de satisfacción, grupos focales.</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Criterios de evaluación (checklist), formularios de feedback, cámaras para documentar pruebas.</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 5,000 (materiales para pruebas, impresión de formularios). (Asumido: Costo mínimo para la documentación y ejecución de pruebas, Justificación técnica PMBOK/GEMS: Inversión en la calidad del producto final).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>5 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>Piezas capaces de soportar caídas desde 1 metro sin romperse. Feedback estético mayormente positivo (>70%).</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>Informe de pruebas con recomendaciones claras para ajustes, documentando la resistencia y el feedback estético.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td>Métodos de prueba de resistencia de materiales.</td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td></td></tr>
+             </table>
+         </div>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Ajustes Finales y Aprobación del Diseño</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>3.0 Diseños de Ajedrez Validados (STL)</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.3.2.3</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Implementar los ajustes de diseño necesarios basados en los resultados de las pruebas de prototipos y el feedback recibido. Una vez realizados los cambios, el diseño final debe ser formalmente aprobado por el Director del Proyecto para iniciar la producción masiva. (Asumido: Detalle del proceso iterativo de diseño y la aprobación formal).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> Los ajustes requeridos son factibles de implementar en el tiempo asignado. <b>Restricción:</b> Cambios significativos en esta etapa podrían retrasar el inicio de la producción masiva.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Ing. Carlos Martínez y Estudiantes de Tecnología</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>Diseños de ajedrez aprobados (Milestone): Día 30 del Mes 2.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Modificación de archivos CAD, revisión de cambios, presentación para aprobación.</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Computadoras con software CAD, personal de diseño.</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 5,000 (energía, horas de diseño). (Asumido: Costo para la fase final de diseño, Justificación técnica PMBOK/GEMS: Es un costo recurrente en cualquier ciclo de diseño).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>5 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>Diseños STL finalizados que incorporen las mejoras y satisfagan todos los criterios de funcionalidad y estética.</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>Aprobación formal del Ing. Carlos Martínez, con registro de la versión final de los archivos STL.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td></td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td></td></tr>
+             </table>
+         </div>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Calibración y Mantenimiento de Impresoras 3D</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>4.0 Juegos de Ajedrez Impresos y Verificados (200 Sets)</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.4.1.1</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Realizar una calibración exhaustiva y mantenimiento preventivo de todas las impresoras 3D disponibles antes del inicio de la producción masiva. Esto incluye ajustes de nivelación, limpieza de extrusores, verificación de correas y lubricación, para asegurar un rendimiento óptimo y minimizar fallos. (Asumido: Detalle de las tareas de mantenimiento para asegurar la eficiencia).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> Todas las impresoras están en buen estado de funcionamiento general. <b>Restricción:</b> La disponibilidad de repuestos específicos o técnicos especializados podría ser limitada.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Equipo de Impresión (Estudiantes)</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>Impresoras 3D listas para producción: Día 5 del Mes 3.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Diagnóstico de impresoras, ajustes de parámetros de impresión, pruebas de impresión de calibración.</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Kits de herramientas, lubricantes, repuestos comunes, filamento de prueba.</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 30,000 (repuestos menores, consumibles de limpieza). (Asumido: Costo para el mantenimiento preventivo y correctivo inicial, Justificación técnica PMBOK/GEMS: Esencial para la continuidad operativa de equipos críticos).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>5 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>Todas las impresoras calibradas y funcionando con una precisión de ±0.1mm en pruebas de tolerancia.</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>Registro de mantenimiento completado y aprobado por el Ing. Carlos Martínez. Impresiones de prueba satisfactorias.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td>Manuales de mantenimiento de impresoras 3D.</td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td></td></tr>
+             </table>
+         </div>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Impresión de Piezas de Ajedrez</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>4.0 Juegos de Ajedrez Impresos y Verificados (200 Sets)</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.4.2.1</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Ejecutar la impresión masiva de las 32 piezas de ajedrez para cada uno de los 200 sets, utilizando los diseños aprobados y el filamento reciclado. Este proceso requerirá la operación continua y supervisada de las impresoras 3D. (Asumido: Detalle del volumen de producción y el monitoreo constante).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> El suministro de filamento reciclado es constante y de buena calidad. <b>Restricción:</b> La capacidad de impresión (número de impresoras y su velocidad) es el principal cuello de botella.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Equipo de Impresión (Estudiantes)</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>Impresión del 50% de las piezas: Día 25 del Mes 3.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Laminado de archivos STL, carga de filamento, inicio y monitoreo de impresiones, retiro de piezas.</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Impresoras 3D, filamento reciclado, computadoras, personal de supervisión.</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 800,000 (filamento reciclado para 200 sets, energía eléctrica). (Asumido: Costo significativo de material para producción masiva, Justificación técnica PMBOK/GEMS: El costo de los insumos es el principal componente de esta fase).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>40 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>Mínimo 95% de piezas impresas sin defectos mayores. Adherencia a los diseños aprobados.</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>200 sets de piezas de ajedrez impresos y visualmente inspeccionados.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td>Guías de optimización de impresión 3D.</td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td></td></tr>
+             </table>
+         </div>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Impresión de Tableros Modulares</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>4.0 Juegos de Ajedrez Impresos y Verificados (200 Sets)</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.4.2.2</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Imprimir los 200 tableros de ajedrez modulares según los diseños aprobados, utilizando filamento reciclado. Este proceso se ejecutará en paralelo con la impresión de las piezas, optimizando el uso de las impresoras. (Asumido: Detalle de la producción paralela para eficiencia).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> El diseño modular facilita la impresión sin requerir soportes complejos. <b>Restricción:</b> La necesidad de mayor área de impresión por módulo puede consumir más tiempo por impresora.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Equipo de Impresión (Estudiantes)</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>Impresión del 50% de los tableros: Día 25 del Mes 3.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Laminado de archivos, carga de filamento, inicio y monitoreo de impresiones.</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Impresoras 3D, filamento reciclado, computadoras.</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 300,000 (filamento reciclado para tableros, energía). (Asumido: Costo significativo de material para producción masiva, Justificación técnica PMBOK/GEMS: Componente principal del costo de producción masiva).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>40 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>Mínimo 95% de módulos de tablero impresos sin defectos mayores. Encaje perfecto entre módulos.</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>200 sets de módulos de tablero impresos y visualmente inspeccionados.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td></td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td></td></tr>
+             </table>
+         </div>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Limpieza y Acabado de Piezas</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>4.0 Juegos de Ajedrez Impresos y Verificados (200 Sets)</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.4.3.1</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Remover cualquier soporte de impresión, rebabas o imperfecciones de las piezas y módulos de tablero impresos. Realizar un lijado fino si es necesario y una limpieza general para asegurar un acabado profesional y seguro. (Asumido: Detalle de las tareas de post-procesado para la calidad final del producto).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> Las piezas están diseñadas para minimizar la necesidad de soportes. <b>Restricción:</b> El proceso de acabado manual es intensivo en tiempo y mano de obra.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Equipo de Post-producción (Estudiantes y Voluntarios)</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>Acabado del 50% de los sets: Día 15 del Mes 4.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Remoción manual de soportes, uso de herramientas de corte y lijado, limpieza con alcohol.</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Herramientas de corte (bisturí, pinzas), lijas finas, alcohol isopropílico, paños.</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 20,000 (herramientas, consumibles de limpieza). (Asumido: Costo para las herramientas y materiales de post-procesado, Justificación técnica PMBOK/GEMS: Necesario para la presentación final del producto).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>20 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>Piezas y tableros lisos, sin rebabas, seguros al tacto, con un acabado uniforme.</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>Piezas aprobadas por el control de calidad visual y táctil.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td></td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td></td></tr>
+             </table>
+         </div>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Ensamblaje y Empaquetado de Sets</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>4.0 Juegos de Ajedrez Impresos y Verificados (200 Sets)</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.4.3.2</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Ensamblar las 32 piezas con su tablero modular correspondiente para formar cada set de ajedrez. Posteriormente, empaquetar cada set en una caja protectora, incluyendo un manual de instrucciones y un folleto sobre el proyecto. (Asumido: Detalle del empaquetado y el material informativo).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> El diseño modular del tablero permite un ensamblaje sencillo. <b>Restricción:</b> La disponibilidad de material de empaque adecuado puede variar.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Equipo de Post-producción (Estudiantes y Voluntarios)</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>Empaquetado del 50% de los sets: Día 30 del Mes 4.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Ensamblaje manual de piezas y tableros, verificación de componentes por set, preparación de cajas, inclusión de material didáctico.</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Cajas de empaque, material de relleno (ej. viruta de papel reciclado), impresiones de folletos/manuales.</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 150,000 (cajas, material de relleno, impresión de manuales). (Asumido: Costo de empaque y material informativo, Justificación técnica PMBOK/GEMS: Es un componente esencial para la entrega y comunicación del valor del proyecto).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>10 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>Cada set completo con 32 piezas y tablero, correctamente ensamblado y empaquetado de forma segura. Material informativo incluido en cada caja.</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>200 sets de ajedrez empaquetados, listos para su distribución.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td></td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td></td></tr>
+             </table>
+         </div>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Control de Calidad Final de Sets</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>4.0 Juegos de Ajedrez Impresos y Verificados (200 Sets)</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.4.3.3</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Realizar una inspección final de cada set de ajedrez empaquetado para verificar la integridad de todos los componentes, la calidad del acabado y el empaque. Se utilizará una lista de verificación detallada para asegurar que cada set cumple con los estándares antes de la distribución. (Asumido: Detalle de la inspección final para asegurar la calidad antes de la entrega).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> La mayoría de los sets superarán esta inspección sin problemas mayores. <b>Restricción:</b> La detección de defectos en esta etapa puede requerir re-trabajo o reimpresión, lo que consume tiempo extra.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Ing. Carlos Martínez y Equipo de Post-producción</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>200 sets aprobados para distribución: Día 35 del Mes 4.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Inspección visual de cada set, verificación de componentes, registro de auditoría.</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Listas de verificación de calidad, espacio de inspección.</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 10,000 (horas de supervisión). (Asumido: Costo de personal para asegurar la calidad final, Justificación técnica PMBOK/GEMS: Es un proceso clave para la validación del producto).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>5 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>100% de los sets inspeccionados y aprobados según la lista de verificación. No más de 2% de sets con defectos menores.</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>Informe de control de calidad final con la lista de sets aprobados.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td></td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td></td></tr>
+             </table>
+         </div>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Identificación y Contacto con Escuelas del NOA</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>5.0 Logística de Distribución Establecida y Ejecutada</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.5.1.1</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Investigar y compilar una lista de escuelas primarias y secundarias en el Noroeste Argentino (NOA) que podrían beneficiarse de los juegos de ajedrez. Contactar a los directivos para presentar el proyecto y coordinar su interés en recibir los sets. (Asumido: Detalle del proceso de selección y contacto inicial con los beneficiarios).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> Existirá una lista de contactos de escuelas disponible o accesible. <b>Restricción:</b> El tiempo de respuesta de las escuelas puede ser lento, afectando la planificación.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Docentes de Ciencias y Voluntarios</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>Lista de 50 escuelas contactadas: Día 10 del Mes 3.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Búsqueda de directorios escolares, elaboración de carta de presentación, llamadas telefónicas/emails.</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Computadoras, teléfono, base de datos de contactos, material de presentación del proyecto.</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 10,000 (comunicaciones, impresión de materiales). (Asumido: Costo para la comunicación y documentación inicial, Justificación técnica PMBOK/GEMS: Costo de recursos humanos y materiales para la fase de contacto).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>10 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>Lista de al menos 50 escuelas con interés confirmado en el proyecto.</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>Base de datos con información de contacto y estado de interés de las escuelas.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td></td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td></td></tr>
+             </table>
+         </div>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Coordinación de Rutas y Entregas</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>5.0 Logística de Distribución Establecida y Ejecutada</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.5.1.2</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Planificar las rutas de distribución más eficientes para la entrega de los 200 sets de ajedrez a las escuelas del NOA. Coordinar fechas y horarios de entrega con cada institución, y asegurar los vehículos y personal necesarios. (Asumido: Detalle de la optimización logística para la distribución).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> Se dispondrá de vehículos y conductores voluntarios. <b>Restricción:</b> Las condiciones de las rutas en el NOA pueden ser desafiantes, afectando los tiempos de entrega.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Ing. Carlos Martínez y Voluntarios</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>Plan de rutas y entregas definido: Día 20 del Mes 4.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Mapeo de ubicaciones, optimización de rutas con software (si aplica), coordinación de voluntarios de transporte, confirmación de fechas de entrega.</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Mapas, software de planificación de rutas (ej., Google Maps), teléfonos, vehículos de transporte.</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 50,000 (combustible, mantenimiento básico de vehículos). (Asumido: Costo de la logística de transporte, Justificación técnica PMBOK/GEMS: Es un costo operativo directo para la fase de distribución).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>10 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>Plan de rutas optimizado que minimice el tiempo y los costos de viaje. Acuerdos de entrega confirmados con el 100% de las escuelas beneficiarias.</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>Documento de plan de rutas y calendario de entregas aprobado.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td></td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td>Acuerdos de uso de vehículos escolares o de voluntarios.</td></tr>
+             </table>
+         </div>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Transporte de Juegos a Escuelas</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>5.0 Logística de Distribución Establecida y Ejecutada</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.5.2.1</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Ejecutar el transporte físico de los juegos de ajedrez empaquetados desde la escuela Sarmiento hasta las instituciones educativas seleccionadas en el NOA, siguiendo el plan de rutas y calendario establecido. (Asumido: Detalle de la ejecución física de la entrega).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> Los vehículos se mantendrán operativos durante los viajes largos. <b>Restricción:</b> Las condiciones climáticas o de las carreteras pueden causar retrasos inesperados.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Voluntarios y Conductores Designados</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>Inicio de transporte: Día 1 del Mes 5.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Carga de vehículos, viajes a las escuelas, comunicación con los puntos de entrega.</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Vehículos, conductores, asistentes para carga y descarga, kits de emergencia para vehículos.</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 80,000 (combustible adicional, viáticos, peajes). (Asumido: Costo significativo por el transporte en el NOA, Justificación técnica PMBOK/GEMS: Costos directos de la operación logística).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>20 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>Entrega de los juegos en perfecto estado, sin daños durante el transporte.</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>Comprobantes de entrega firmados por los directivos escolares.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td></td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td></td></tr>
+             </table>
+         </div>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Entrega y Documentación de Recepción</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>5.0 Logística de Distribución Establecida y Ejecutada</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.5.2.2</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Realizar la entrega formal de los sets de ajedrez a cada escuela, asegurando que se firmen los documentos de recepción correspondientes. Se realizará una breve presentación del proyecto a la escuela receptora. (Asumido: Detalle de la formalización de la entrega y la presentación del proyecto).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> Los directivos escolares estarán disponibles para recibir los juegos. <b>Restricción:</b> Posibles demoras en la firma de documentos si no hay personal autorizado.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Ing. Carlos Martínez y Voluntarios</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>Finalización de todas las entregas: Día 30 del Mes 5.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Entrega física de sets, explicación del proyecto, obtención de firmas, toma de fotografías (con consentimiento).</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Documentos de recepción (actas), bolígrafos, cámara fotográfica.</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 5,000 (impresión de actas). (Asumido: Costo mínimo para la documentación, Justificación técnica PMBOK/GEMS: Esencial para la trazabilidad y evidencia de la entrega).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>10 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>100% de actas de recepción firmadas y archivadas. Satisfacción explícita por parte de las escuelas receptoras.</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>Archivo completo de todas las actas de recepción y evidencia fotográfica.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td></td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td></td></tr>
+             </table>
+         </div>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Recopilación de Feedback de Escuelas</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>6.0 Informe Final del Proyecto y Modelo Replicable</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.6.1.1</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Diseñar y distribuir encuestas de satisfacción a docentes y estudiantes de las escuelas beneficiarias para recoger feedback sobre la utilidad, calidad y impacto de los juegos de ajedrez. (Asumido: Detalle de la metodología de recopilación de feedback para medir el impacto).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> Las escuelas colaborarán en la distribución y recopilación de las encuestas. <b>Restricción:</b> La tasa de respuesta de las encuestas puede ser baja si no se gestiona activamente.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Docentes de Ciencias y Voluntarios</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>Recopilación del 80% del feedback: Día 10 del Mes 5.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Diseño de encuestas (físicas/digitales), envío a escuelas, seguimiento, recopilación de datos.</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Software de encuestas (ej., Google Forms), impresiones de encuestas, computadoras.</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 5,000 (impresión de encuestas, si aplica, software). (Asumido: Costo mínimo para la evaluación del impacto, Justificación técnica PMBOK/GEMS: Recurso para medir la satisfacción y el éxito del proyecto).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>10 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>Obtener feedback de al menos 30% de las escuelas beneficiarias y 200 estudiantes.</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>Base de datos con respuestas a las encuestas, lista de escuelas participantes en el feedback.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td></td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td></td></tr>
+             </table>
+         </div>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Análisis de Resultados y Lecciones Aprendidas</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>6.0 Informe Final del Proyecto y Modelo Replicable</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.6.1.2</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Analizar los datos recopilados de las encuestas de feedback y los resultados de la ejecución del proyecto para identificar los éxitos, desafíos y áreas de mejora. Documentar las lecciones aprendidas para futuros proyectos. (Asumido: Detalle del análisis para la mejora continua y el cierre formal).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> El equipo es capaz de realizar un análisis objetivo y constructivo. <b>Restricción:</b> El tiempo para el análisis profundo puede ser limitado debido a la finalización del proyecto.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Ing. Carlos Martínez y Docentes de Ciencias</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>Documento de Lecciones Aprendidas: Día 20 del Mes 5.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Análisis estadístico (si aplica), reuniones de brainstorming de lecciones aprendidas, redacción de informe.</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Computadoras, software de análisis de datos (ej., Excel), pizarras.</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 5,000 (materiales de oficina). (Asumido: Costo mínimo para la documentación, Justificación técnica PMBOK/GEMS: Esencial para la mejora organizacional y proyectos futuros).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>10 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>Análisis objetivo, con conclusiones claras y recomendaciones accionables. Documento de lecciones aprendidas completo y útil.</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>Informe de análisis de resultados y documento de lecciones aprendidas aprobados.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td>Metodologías de análisis de datos cualitativos y cuantitativos.</td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td></td></tr>
+             </table>
+         </div>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Elaboración de Informe Final</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>6.0 Informe Final del Proyecto y Modelo Replicable</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.6.2.1</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Redactar el informe final del proyecto, consolidando todos los hallazgos, resultados, cumplimientos de objetivos, el presupuesto ejecutado y las lecciones aprendidas. Este informe es el documento formal de cierre del proyecto. (Asumido: Detalle de la consolidación de toda la información para el cierre formal).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> Toda la información necesaria estará disponible para el informe. <b>Restricción:</b> El tiempo para la redacción final puede ser limitado.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Ing. Carlos Martínez y Docentes de Ciencias</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>Borrador de Informe Final: Día 25 del Mes 5.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Recopilación de todos los informes parciales, redacción, revisión y edición.</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Computadoras, software de procesamiento de texto, impresoras.</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 5,000 (impresión del informe, materiales de oficina). (Asumido: Costo mínimo para la formalización del cierre, Justificación técnica PMBOK/GEMS: Esencial para la rendición de cuentas y el cierre administrativo).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>5 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>Informe completo, claro, conciso, objetivo y profesional, alineado con el PMBOK.</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>Informe final aprobado por el Patrocinador del Proyecto.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td>Guía PMBOK 6ª Edición para informes de cierre.</td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td></td></tr>
+             </table>
+         </div>
+ 
+         <div class="dictionary-entry">
+             <h4>PT: Publicación del Modelo Replicable</h4>
+             <table>
+                 <tr><th>Proyecto</th><td>Ajedrez Circular: Juegos 3D para el NOA</td></tr>
+                 <tr><th>Entregable</th><td>6.0 Informe Final del Proyecto y Modelo Replicable</td></tr>
+                 <tr><th>Identificador del Código de Cuenta</th><td>1.6.2.2</td></tr>
+                 <tr><th>Descripción del Trabajo</th><td>Desarrollar y publicar un documento o guía detallada que describa el "Modelo Ajedrez Circular" de producción sostenible y distribución de juegos. Este modelo debe ser replicable por otras instituciones o comunidades. (Asumido: Detalle de la creación de un manual o guía para replicabilidad).</td></tr>
+                 <tr><th>Supuestos y Restricciones</th><td><b>Supuesto:</b> El modelo es escalable y adaptable a diferentes contextos. <b>Restricción:</b> Los recursos para una publicación de alta calidad (diseño gráfico, edición profesional) pueden ser limitados.</td></tr>
+                 <tr><th>Organización Responsable</th><td>Ing. Carlos Martínez y Docentes de Ciencias</td></tr>
+                 <tr><th>Hitos del Cronograma</th><td>Modelo Replicable Publicado: Día 30 del Mes 5.</td></tr>
+                 <tr><th>Actividades Asociadas del Cronograma</th><td>Extracción de procesos clave del informe final, redacción y diseño de la guía, publicación en plataformas (web, PDF).</td></tr>
+                 <tr><th>Recursos Necesarios</th><td>Computadoras, software de diseño editorial, plataformas de publicación (ej., sitio web de la escuela).</td></tr>
+                 <tr><th>Estimaciones de Costos</th><td>ARS 15,000 (diseño gráfico, impresión de copias si aplica). (Asumido: Costo para la difusión y presentación profesional del modelo, Justificación técnica PMBOK/GEMS: Es un entregable clave que extiende el valor del proyecto).</td></tr>
+                 <tr><th>Estimaciones de Tiempo</th><td>5 días laborales.</td></tr>
+                 <tr><th>Requisitos de Calidad</th><td>Documento claro, conciso, fácil de entender y con pasos accionables para la replicación del modelo.</td></tr>
+                 <tr><th>Criterios de Aceptación</th><td>Guía del Modelo Replicable publicada y accesible al público.</td></tr>
+                 <tr><th>Referencias Técnicas</th><td>Guías de proyectos de desarrollo sostenible.</td></tr>
+                 <tr><th>Información sobre Acuerdos</th><td></td></tr>
+             </table>
+         </div>
+     </div>
+ 
+     <div class="section">
+         <h2>IV. Matriz de Trazabilidad de Requisitos (MTR)</h2>
+         <p>La Matriz de Trazabilidad de Requisitos vincula los objetivos SMART del proyecto con los Paquetes de Trabajo (PT) de la EDT, asegurando que cada componente del trabajo contribuya directamente a los objetivos estratégicos del proyecto. </p>
+         <div class="note">
+             <strong>Asumido:</strong> Se traza cada objetivo SMART a los PTs que son directamente responsables de su cumplimiento. La justificación técnica explica esta relación, demostrando el valor de cada PT.
+         </div>
+         <table class="rtm-table">
+             <thead>
+                 <tr>
+                     <th>ID Objetivo SMART</th>
+                     <th>Objetivo SMART</th>
+                     <th>ID Paquete de Trabajo (PT)</th>
+                     <th>Nombre del Paquete de Trabajo (PT)</th>
+                     <th>Justificación de la Trazabilidad</th>
+                 </tr>
+             </thead>
+             <tbody>
+                 <tr>
+                     <td>S-1</td>
+                     <td>Producir un mínimo de 200 sets completos de juegos de ajedrez mediante impresión 3D con filamentos reciclados, diseñados para ser didácticos y resistentes.</td>
+                     <td>1.4.2.1, 1.4.2.2, 1.4.3.1, 1.4.3.2, 1.4.3.3</td>
+                     <td>Impresión de Piezas de Ajedrez, Impresión de Tableros Modulares, Limpieza y Acabado de Piezas, Ensamblaje y Empaquetado de Sets, Control de Calidad Final de Sets</td>
+                     <td>Estos PTs son directamente responsables de la producción física de los juegos (piezas y tableros), su acabado y empaquetado, y la verificación de su calidad y completitud, lo que cumple con la parte "Producir 200 sets completos".</td>
+                 </tr>
+                 <tr>
+                     <td>M-1</td>
+                     <td>Mantener el gasto total en filamentos por debajo de ARS 1,500,000 y lograr una tasa de éxito de impresión del 95%, utilizando al menos 80% de plástico reciclado para la producción de filamentos.</td>
+                     <td>1.1.2.1, 1.1.2.2, 1.1.2.3, 1.4.2.1, 1.4.2.2</td>
+                     <td>Triturado de Plástico, Extrusión de Filamento 3D, Control de Calidad del Filamento, Impresión de Piezas de Ajedrez, Impresión de Tableros Modulares</td>
+                     <td>Los PTs 1.1.2.1, 1.1.2.2 y 1.1.2.3 aseguran la producción de filamento reciclado de calidad y controlan los costos y porcentaje de material reciclado. Los PTs 1.4.2.1 y 1.4.2.2 impactan directamente la tasa de éxito de impresión y el consumo real de filamento, monitoreando la eficiencia del proceso.</td>
+                 </tr>
+                 <tr>
+                     <td>A&R-1</td>
+                     <td>Se considera alcanzable al utilizar la infraestructura existente de la Escuela Sarmiento y la participación activa de estudiantes y docentes capacitados. Es relevante porque contribuye directamente a la equidad educativa y la sostenibilidad ambiental en el NOA.</td>
+                     <td>1.2.2.1, 1.2.2.2, 1.1.1.1, 1.5.1.1, 1.5.2.1</td>
+                     <td>Taller de Impresión 3D y Reciclaje (Estudiantes), Taller de Impresión 3D y Reciclaje (Docentes), Campañas de Recolección (Plástico), Identificación y Contacto con Escuelas del NOA, Transporte de Juegos a Escuelas</td>
+                     <td>Los PTs de capacitación (1.2.2.1 y 1.2.2.2) aseguran la participación activa y el uso de la infraestructura escolar. El PT 1.1.1.1 fomenta la sostenibilidad ambiental. Los PTs 1.5.1.1 y 1.5.2.1 aseguran la llegada de los recursos a las escuelas, cumpliendo con la equidad educativa y la relevancia social.</td>
+                 </tr>
+                 <tr>
+                     <td>T-1</td>
+                     <td>Completar la totalidad del proceso de producción y distribución de los 200 juegos en un plazo máximo de 5 meses, con la distribución final en las escuelas del NOA prevista para la última semana del quinto mes.</td>
+                     <td>1.6.2.1, 1.5.2.2</td>
+                     <td>Elaboración de Informe Final, Entrega y Documentación de Recepción</td>
+                     <td>El PT 1.5.2.2 es el hito final de la distribución, que debe ocurrir en el plazo establecido. El PT 1.6.2.1 formaliza el cierre del proyecto y documenta el cumplimiento de todos los plazos, incluyendo el cronograma general de 5 meses. Todos los demás PTs del proyecto, con sus duraciones estimadas, contribuyen a este objetivo de tiempo al ser parte del cronograma general.</td>
+                 </tr>
+             </tbody>
+         </table>
+     </div>
+ 
+     <div class="section">
+         <h2>V. Diagrama de Gantt</h2>
+         <p>El Diagrama de Gantt proporciona una representación visual del cronograma del proyecto, mostrando la duración de las tareas, sus dependencias y la ruta crítica. Se divide en una tabla de datos detallada y una visualización gráfica.</p>
+ 
+         <h3>V.1. TABLA DE TAREAS, RECURSOS Y ANÁLISIS DE RIESGOS (DATA TABLE)</h3>
+         <div class="note">
+             <strong>Asumido:</strong> Las duraciones, predecesoras y recursos se han deducido de las estimaciones del Diccionario de la EDT. Las fechas de Inicio Temprano (ES), Finalización Temprana (EF), Inicio Tardío (LS), Finalización Tardía (LF), y Holgura Total se han calculado usando el Método de la Ruta Crítica (CPM). La ruta crítica se ha identificado donde la Holgura Total es cero.
+         </div>
+         <div class="gantt-container">
+             <table class="data-table-gantt gantt-table">
+                 <thead>
+                     <tr>
+                         <th>ID</th>
+                         <th>Tarea</th>
+                         <th>Duración (Días)</th>
+                         <th>Predecesora</th>
+                         <th>Inicio Temprano (ES)</th>
+                         <th>Finalización Temprana (EF)</th>
+                         <th>Inicio Tardío (LS)</th>
+                         <th>Finalización Tardía (LF)</th>
+                         <th>Holgura Total (Días)</th>
+                         <th>Ruta Crítica (Sí/No)</th>
+                         <th>Recursos Asignados</th>
+                         <th>Riesgos Clave</th>
+                     </tr>
+                 </thead>
+                 <tbody>
+                     <tr><td>T1</td><td>PT: Elaboración de Contenidos Didácticos</td><td>10</td><td></td><td>2024-05-15</td><td>2024-05-28</td><td>2024-05-15</td><td>2024-05-28</td><td>0</td><td>Sí</td><td>Docentes de Ciencias y Tecnología</td><td>Calidad del material, disponibilidad de docentes.</td></tr>
+                     <tr><td>T2</td><td>PT: Taller de Impresión 3D y Reciclaje (Estudiantes)</td><td>10</td><td>T1(FC)</td><td>2024-05-29</td><td>2024-06-11</td><td>2024-05-29</td><td>2024-06-11</td><td>0</td><td>Sí</td><td>Ing. Carlos Martínez, Docentes de Tecnología</td><td>Baja comprensión de estudiantes.</td></tr>
+                     <tr><td>T3</td><td>PT: Taller de Impresión 3D y Reciclaje (Docentes)</td><td>5</td><td>T2(FC)</td><td>2024-06-12</td><td>2024-06-18</td><td>2024-06-12</td><td>2024-06-18</td><td>0</td><td>Sí</td><td>Ing. Carlos Martínez</td><td>Baja participación docente.</td></tr>
+                     <tr><td>T4</td><td>PT: Campañas de Recolección (Plástico)</td><td>20</td><td></td><td>2024-05-15</td><td>2024-06-11</td><td>2024-05-15</td><td>2024-06-11</td><td>0</td><td>Sí</td><td>Voluntarios Ambientales y Estudiantes</td><td>Baja recolección de plástico.</td></tr>
+                     <tr><td>T5</td><td>PT: Clasificación y Limpieza de Materiales</td><td>10</td><td>T4(FC)</td><td>2024-06-12</td><td>2024-06-25</td><td>2024-06-12</td><td>2024-06-25</td><td>0</td><td>Sí</td><td>Voluntarios Ambientales y Estudiantes</td><td>Impurezas en el material.</td></tr>
+                     <tr><td>T6</td><td>PT: Triturado de Plástico</td><td>5</td><td>T5(FC)</td><td>2024-06-26</td><td>2024-07-02</td><td>2024-06-26</td><td>2024-07-02</td><td>0</td><td>Sí</td><td>Estudiantes de Tecnología</td><td>Fallas de la trituradora.</td></tr>
+                     <tr><td>T7</td><td>PT: Extrusión de Filamento 3D</td><td>10</td><td>T6(FC)</td><td>2024-07-03</td><td>2024-07-16</td><td>2024-07-03</td><td>2024-07-16</td><td>0</td><td>Sí</td><td>Ing. Carlos Martínez y Estudiantes de Tecnología</td><td>Filamento de mala calidad.</td></tr>
+                     <tr><td>T8</td><td>PT: Control de Calidad del Filamento</td><td>5</td><td>T7(FC)</td><td>2024-07-17</td><td>2024-07-23</td><td>2024-07-17</td><td>2024-07-23</td><td>0</td><td>Sí</td><td>Ing. Carlos Martínez y Estudiantes de Tecnología</td><td>Filamento no apto para impresión.</td></tr>
+                     <tr><td>T9</td><td>PT: Diseño Inicial de Piezas (CAD)</td><td>10</td><td>T3(FC)</td><td>2024-06-19</td><td>2024-07-02</td><td>2024-06-26</td><td>2024-07-09</td><td>5</td><td>No</td><td>Estudiantes de Programación y Tecnología</td><td>Diseños no óptimos.</td></tr>
+                     <tr><td>T10</td><td>PT: Diseño de Tablero Modular (CAD)</td><td>5</td><td>T9(FC)</td><td>2024-07-03</td><td>2024-07-09</td><td>2024-07-10</td><td>2024-07-16</td><td>5</td><td>No</td><td>Estudiantes de Programación y Tecnología</td><td>Problemas de encaje.</td></tr>
+                     <tr><td>T11</td><td>PT: Impresión de Prototipos</td><td>5</td><td>T8(FC), T10(FC)</td><td>2024-07-24</td><td>2024-07-30</td><td>2024-07-24</td><td>2024-07-30</td><td>0</td><td>Sí</td><td>Equipo de Impresión (Estudiantes)</td><td>Prototipos defectuosos.</td></tr>
+                     <tr><td>T12</td><td>PT: Pruebas de Resistencia y Estética</td><td>5</td><td>T11(FC)</td><td>2024-07-31</td><td>2024-08-06</td><td>2024-07-31</td><td>2024-08-06</td><td>0</td><td>Sí</td><td>Ing. Carlos Martínez, Estudiantes y Docentes</td><td>Resultados de prueba negativos.</td></tr>
+                     <tr><td>T13</td><td>PT: Ajustes Finales y Aprobación del Diseño</td><td>5</td><td>T12(FC)</td><td>2024-08-07</td><td>2024-08-13</td><td>2024-08-07</td><td>2024-08-13</td><td>0</td><td>Sí</td><td>Ing. Carlos Martínez y Estudiantes de Tecnología</td><td>Ajustes insuficientes.</td></tr>
+                     <tr><td>T14</td><td>PT: Calibración y Mantenimiento de Impresoras 3D</td><td>5</td><td>T13(FC)</td><td>2024-08-14</td><td>2024-08-20</td><td>2024-08-14</td><td>2024-08-20</td><td>0</td><td>Sí</td><td>Equipo de Impresión (Estudiantes)</td><td>Fallas de impresora.</td></tr>
+                     <tr><td>T15</td><td>PT: Impresión de Piezas de Ajedrez</td><td>40</td><td>T14(FC)</td><td>2024-08-21</td><td>2024-10-15</td><td>2024-08-21</td><td>2024-10-15</td><td>0</td><td>Sí</td><td>Equipo de Impresión (Estudiantes)</td><td>Alto porcentaje de piezas defectuosas.</td></tr>
+                     <tr><td>T16</td><td>PT: Impresión de Tableros Modulares</td><td>40</td><td>T14(FC)</td><td>2024-08-21</td><td>2024-10-15</td><td>2024-08-21</td><td>2024-10-15</td><td>0</td><td>Sí</td><td>Equipo de Impresión (Estudiantes)</td><td>Problemas de ensamble del tablero.</td></tr>
+                     <tr><td>T17</td><td>PT: Limpieza y Acabado de Piezas</td><td>20</td><td>T15(FC), T16(FC)</td><td>2024-10-16</td><td>2024-11-12</td><td>2024-10-16</td><td>2024-11-12</td><td>0</td><td>Sí</td><td>Equipo de Post-producción (Estudiantes y Voluntarios)</td><td>Acabado deficiente.</td></tr>
+                     <tr><td>T18</td><td>PT: Ensamblaje y Empaquetado de Sets</td><td>10</td><td>T17(FC)</td><td>2024-11-13</td><td>2024-11-26</td><td>2024-11-13</td><td>2024-11-26</td><td>0</td><td>Sí</td><td>Equipo de Post-producción (Estudiantes y Voluntarios)</td><td>Sets incompletos.</td></tr>
+                     <tr><td>T19</td><td>PT: Control de Calidad Final de Sets</td><td>5</td><td>T18(FC)</td><td>2024-11-27</td><td>2024-12-03</td><td>2024-11-27</td><td>2024-12-03</td><td>0</td><td>Sí</td><td>Ing. Carlos Martínez y Equipo de Post-producción</td><td>Sets no cumplen estándares.</td></tr>
+                     <tr><td>T20</td><td>PT: Identificación y Contacto con Escuelas del NOA</td><td>10</td><td>T13(FC-20d)</td><td>2024-07-17</td><td>2024-07-30</td><td>2024-07-17</td><td>2024-07-30</td><td>0</td><td>Sí</td><td>Docentes de Ciencias y Voluntarios</td><td>Poca respuesta de escuelas.</td></tr>
+                     <tr><td>T21</td><td>PT: Coordinación de Rutas y Entregas</td><td>10</td><td>T19(CC-20d), T20(FC)</td><td>2024-07-31</td><td>2024-08-13</td><td>2024-11-06</td><td>2024-11-19</td><td>70</td><td>No</td><td>Ing. Carlos Martínez y Voluntarios</td><td>Rutas ineficientes.</td></tr>
+                     <tr><td>T22</td><td>PT: Transporte de Juegos a Escuelas</td><td>20</td><td>T19(FC), T21(CC)</td><td>2024-12-04</td><td>2024-12-31</td><td>2024-12-04</td><td>2024-12-31</td><td>0</td><td>Sí</td><td>Voluntarios y Conductores Designados</td><td>Retrasos en transporte.</td></tr>
+                     <tr><td>T23</td><td>PT: Entrega y Documentación de Recepción</td><td>10</td><td>T22(FC)</td><td>2025-01-01</td><td>2025-01-14</td><td>2025-01-01</td><td>2025-01-14</td><td>0</td><td>Sí</td><td>Ing. Carlos Martínez y Voluntarios</td><td>Problemas de documentación.</td></tr>
+                     <tr><td>T24</td><td>PT: Recopilación de Feedback de Escuelas</td><td>10</td><td>T23(FC)</td><td>2025-01-15</td><td>2025-01-28</td><td>2025-01-15</td><td>2025-01-28</td><td>0</td><td>Sí</td><td>Docentes de Ciencias y Voluntarios</td><td>Baja tasa de respuesta.</td></tr>
+                     <tr><td>T25</td><td>PT: Análisis de Resultados y Lecciones Aprendidas</td><td>10</td><td>T24(FC)</td><td>2025-01-29</td><td>2025-02-11</td><td>2025-01-29</td><td>2025-02-11</td><td>0</td><td>Sí</td><td>Ing. Carlos Martínez y Docentes de Ciencias</td><td>Análisis superficial.</td></tr>
+                     <tr><td>T26</td><td>PT: Elaboración de Informe Final</td><td>5</td><td>T25(FC)</td><td>2025-02-12</td><td>2025-02-18</td><td>2025-02-12</td><td>2025-02-18</td><td>0</td><td>Sí</td><td>Ing. Carlos Martínez y Docentes de Ciencias</td><td>Informe incompleto.</td></tr>
+                     <tr><td>T27</td><td>PT: Publicación del Modelo Replicable</td><td>5</td><td>T26(FC)</td><td>2025-02-19</td><td>2025-02-25</td><td>2025-02-19</td><td>2025-02-25</td><td>0</td><td>Sí</td><td>Ing. Carlos Martínez y Docentes de Ciencias</td><td>Modelo no claro.</td></tr>
+                 </tbody>
+             </table>
+         </div>
+ 
+         <h3>V.2. TABLA DE VISUALIZACIÓN GRÁFICA DE GANTT</h3>
+         <div class="note">
+             <strong>Asumido:</strong> La duración total del proyecto es de aproximadamente 9 meses (de Mayo 2024 a Febrero 2025). La unidad temporal gráfica seleccionada es "Semana X" para una visibilidad óptima en un formato web, con un ancho fijo de 50px por semana. La altura de las filas se ajusta uniformemente. La Ruta Crítica se destaca en rojo.
+         </div>
+         <div class="gantt-container">
+             <table class="gantt-table">
+                 <thead>
+                     <tr>
+                         <th style="width: 150px;">Tarea</th>
+                         <th style="width: 80px;">ID</th>
+                         <th style="width: 100px;">Duración (Días)</th>
+                         <th style="width: 100px;">Predecesora</th>
+                         <!-- Semanas (35 semanas ~ 9 meses) -->
+                         <th colspan="4" style="text-align: center;">Mes 1 (May)</th>
+                         <th colspan="4" style="text-align: center;">Mes 2 (Jun)</th>
+                         <th colspan="4" style="text-align: center;">Mes 3 (Jul)</th>
+                         <th colspan="4" style="text-align: center;">Mes 4 (Ago)</th>
+                         <th colspan="4" style="text-align: center;">Mes 5 (Sep)</th>
+                         <th colspan="4" style="text-align: center;">Mes 6 (Oct)</th>
+                         <th colspan="4" style="text-align: center;">Mes 7 (Nov)</th>
+                         <th colspan="4" style="text-align: center;">Mes 8 (Dic)</th>
+                         <th colspan="4" style="text-align: center;">Mes 9 (Ene-Feb)</th>
+ 
+                     </tr>
+                     <tr>
+                         <th></th>
+                         <th></th>
+                         <th></th>
+                         <th></th>
+                         <th>S1</th><th>S2</th><th>S3</th><th>S4</th>
+                         <th>S5</th><th>S6</th><th>S7</th><th>S8</th>
+                         <th>S9</th><th>S10</th><th>S11</th><th>S12</th>
+                         <th>S13</th><th>S14</th><th>S15</th><th>S16</th>
+                         <th>S17</th><th>S18</th><th>S19</th><th>S20</th>
+                         <th>S21</th><th>S22</th><th>S23</th><th>S24</th>
+                         <th>S25</th><th>S26</th><th>S27</th><th>S28</th>
+                         <th>S29</th><th>S30</th><th>S31</th><th>S32</th>
+                         <th>S33</th><th>S34</th><th>S35</th><th>S36</th>
+                     </tr>
+                 </thead>
+                 <tbody>
+                     <tr>
+                         <td class="task-name">PT: Elaboración de Contenidos Didácticos</td>
+                         <td>T1</td><td>10</td><td></td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar critical-path" style="left: 0px; width: 71.42857142857143px;">T1 (10D)</div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="task-name">PT: Taller de Impresión 3D y Reciclaje (Estudiantes)</td>
+                         <td>T2</td><td>10</td><td>T1(FC)</td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar critical-path" style="left: 71.42857142857143px; width: 71.42857142857143px;">T2 (10D)</div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="task-name">PT: Taller de Impresión 3D y Reciclaje (Docentes)</td>
+                         <td>T3</td><td>5</td><td>T2(FC)</td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar critical-path" style="left: 142.85714285714286px; width: 35.714285714285715px;">T3 (5D)</div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="task-name">PT: Campañas de Recolección (Plástico)</td>
+                         <td>T4</td><td>20</td><td></td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar critical-path" style="left: 0px; width: 142.85714285714286px;">T4 (20D)</div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="task-name">PT: Clasificación y Limpieza de Materiales</td>
+                         <td>T5</td><td>10</td><td>T4(FC)</td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar critical-path" style="left: 142.85714285714286px; width: 71.42857142857143px;">T5 (10D)</div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="task-name">PT: Triturado de Plástico</td>
+                         <td>T6</td><td>5</td><td>T5(FC)</td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar critical-path" style="left: 214.28571428571428px; width: 35.714285714285715px;">T6 (5D)</div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="task-name">PT: Extrusión de Filamento 3D</td>
+                         <td>T7</td><td>10</td><td>T6(FC)</td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar critical-path" style="left: 250px; width: 71.42857142857143px;">T7 (10D)</div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="task-name">PT: Control de Calidad del Filamento</td>
+                         <td>T8</td><td>5</td><td>T7(FC)</td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar critical-path" style="left: 321.42857142857144px; width: 35.714285714285715px;">T8 (5D)</div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="task-name">PT: Diseño Inicial de Piezas (CAD)</td>
+                         <td>T9</td><td>10</td><td>T3(FC)</td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar" style="left: 178.57142857142858px; width: 71.42857142857143px; background-color: #1abc9c;">T9 (10D)</div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="task-name">PT: Diseño de Tablero Modular (CAD)</td>
+                         <td>T10</td><td>5</td><td>T9(FC)</td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar" style="left: 250px; width: 35.714285714285715px; background-color: #1abc9c;">T10 (5D)</div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="task-name">PT: Impresión de Prototipos</td>
+                         <td>T11</td><td>5</td><td>T8(FC), T10(FC)</td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar critical-path" style="left: 357.14285714285717px; width: 35.714285714285715px;">T11 (5D)</div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="task-name">PT: Pruebas de Resistencia y Estética</td>
+                         <td>T12</td><td>5</td><td>T11(FC)</td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar critical-path" style="left: 392.85714285714283px; width: 35.714285714285715px;">T12 (5D)</div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="task-name">PT: Ajustes Finales y Aprobación del Diseño</td>
+                         <td>T13</td><td>5</td><td>T12(FC)</td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar critical-path" style="left: 428.57142857142856px; width: 35.714285714285715px;">T13 (5D)</div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="task-name">PT: Calibración y Mantenimiento de Impresoras 3D</td>
+                         <td>T14</td><td>5</td><td>T13(FC)</td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar critical-path" style="left: 464.2857142857143px; width: 35.714285714285715px;">T14 (5D)</div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="task-name">PT: Impresión de Piezas de Ajedrez</td>
+                         <td>T15</td><td>40</td><td>T14(FC)</td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar critical-path" style="left: 500px; width: 285.7142857142857px;">T15 (40D)</div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="task-name">PT: Impresión de Tableros Modulares</td>
+                         <td>T16</td><td>40</td><td>T14(FC)</td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar critical-path" style="left: 500px; width: 285.7142857142857px;">T16 (40D)</div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="task-name">PT: Limpieza y Acabado de Piezas</td>
+                         <td>T17</td><td>20</td><td>T15(FC), T16(FC)</td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar critical-path" style="left: 785.7142857142857px; width: 142.85714285714286px;">T17 (20D)</div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="task-name">PT: Ensamblaje y Empaquetado de Sets</td>
+                         <td>T18</td><td>10</td><td>T17(FC)</td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar critical-path" style="left: 928.5714285714286px; width: 71.42857142857143px;">T18 (10D)</div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="task-name">PT: Control de Calidad Final de Sets</td>
+                         <td>T19</td><td>5</td><td>T18(FC)</td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar critical-path" style="left: 1000px; width: 35.714285714285715px;">T19 (5D)</div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="task-name">PT: Identificación y Contacto con Escuelas del NOA</td>
+                         <td>T20</td><td>10</td><td>T13(FC-20d)</td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar critical-path" style="left: 321.42857142857144px; width: 71.42857142857143px;">T20 (10D)</div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="task-name">PT: Coordinación de Rutas y Entregas</td>
+                         <td>T21</td><td>10</td><td>T19(CC-20d), T20(FC)</td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar" style="left: 392.85714285714283px; width: 71.42857142857143px; background-color: #1abc9c;">T21 (10D)</div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="task-name">PT: Transporte de Juegos a Escuelas</td>
+                         <td>T22</td><td>20</td><td>T19(FC), T21(CC)</td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar critical-path" style="left: 1035.7142857142858px; width: 142.85714285714286px;">T22 (20D)</div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="task-name">PT: Entrega y Documentación de Recepción</td>
+                         <td>T23</td><td>10</td><td>T22(FC)</td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar critical-path" style="left: 1178.5714285714287px; width: 71.42857142857143px;">T23 (10D)</div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="task-name">PT: Recopilación de Feedback de Escuelas</td>
+                         <td>T24</td><td>10</td><td>T23(FC)</td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar critical-path" style="left: 1250px; width: 71.42857142857143px;">T24 (10D)</div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="task-name">PT: Análisis de Resultados y Lecciones Aprendidas</td>
+                         <td>T25</td><td>10</td><td>T24(FC)</td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar critical-path" style="left: 1321.4285714285716px; width: 71.42857142857143px;">T25 (10D)</div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="task-name">PT: Elaboración de Informe Final</td>
+                         <td>T26</td><td>5</td><td>T25(FC)</td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar critical-path" style="left: 1392.857142857143px; width: 35.714285714285715px;">T26 (5D)</div>
+                         </td>
+                     </tr>
+                     <tr>
+                         <td class="task-name">PT: Publicación del Modelo Replicable</td>
+                         <td>T27</td><td>5</td><td>T26(FC)</td>
+                         <td colspan="36" class="gantt-grid">
+                             <div class="task-bar critical-path" style="left: 1428.5714285714287px; width: 35.714285714285715px;">T27 (5D)</div>
+                         </td>
+                     </tr>
+                 </tbody>
+             </table>
+         </div>
+     </div>
+ 
+     <div class="section">
+         <h2>IV. Refinamiento Adaptativo</h2>
+         <p>Para optimizar y ajustar este plan de proyecto a sus necesidades específicas, por favor considere las siguientes preguntas sobre los datos asumidos:</p>
+         <ol>
+             <li><strong>Presupuesto Asumido:</strong> ¿Es el presupuesto preliminar de ARS 5,000,000 asumido para el proyecto "Ajedrez Circular: Juegos 3D para el NOA" realista? ¿Desea especificar un presupuesto más preciso o detallar las categorías de gasto principales (ej., materiales, equipos, personal)?</li>
+             <li><strong>Hitos y Duración:</strong> Se han asumido hitos y duraciones específicas para cada fase (ej., 30 días para capacitación, 60 días para producción masiva). ¿Hay fechas límite o hitos específicos que deban considerarse? ¿Cuál sería la duración ideal del proyecto en semanas o meses?</li>
+             <li><strong>Roles y Recursos:</strong> Se han asumido roles genéricos (ej., Coordinador Técnico, Equipo de Impresión, Voluntarios). ¿Desea asignar nombres específicos o detallar las responsabilidades de cada rol? ¿Hay recursos específicos (impresoras 3D, máquinas extrusoras) que deban ser identificados por modelo o cantidad?</li>
+             <li><strong>Criterios de Calidad:</strong> Se han establecido criterios de calidad generales (ej., resistencia, seguridad, estética). ¿Desea añadir métricas más específicas, como porcentaje de piezas defectuosas tolerado, o certificaciones de seguridad para los materiales reciclados?</li>
+             <li><strong>Riesgos Específicos:</strong> Se han listado riesgos de alto nivel (ej., calidad del filamento, problemas técnicos, aceptación). ¿Existen riesgos adicionales que sean específicos de la operación en el NOA (ej., logística de distribución, financiación continua) o de la tecnología de reciclaje/impresión 3D?</li>
+         </ol>
+     </div>
+ 
+ </body>
+ </html>
+ ```
